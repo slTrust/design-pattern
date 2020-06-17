@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+
+    <bean id="tank" class="com.design.d12代理模式.spring.v1.Tank"/>
+    <bean id="timeProxy" class="com.design.d12代理模式.spring.v1.TimeProxy"/>
+
+    <!-- aop精髓  面向切片，不修改原来代码逻辑情况下给它添加新功能 -->
+    <aop:config>
+        <aop:aspect id="time" ref="timeProxy">
+            <aop:pointcut id="onmove" expression="execution(void com.design.d12代理模式.spring.v1.Tank.move())"/>
+            <aop:before method="before" pointcut-ref="onmove"/>
+            <aop:after method="after" pointcut-ref="onmove"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>
